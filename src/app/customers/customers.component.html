@@ -1,0 +1,137 @@
+<!-- 👥 CUSTOMERS - DESIGN MODERNE -->
+<div class="customers-container">
+  <div class="container">
+    <!-- 📋 Header -->
+    <div class="page-header">
+      <div class="header-content">
+        <div class="header-info">
+          <div class="header-icon">
+            <i class="bi bi-people-fill"></i>
+          </div>
+          <div class="header-text">
+            <h1 class="page-title">Customers</h1>
+            <p class="page-subtitle">Manage your customer database</p>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-primary" routerLink="/new-customer">
+            <i class="bi bi-person-plus"></i>
+            Add Customer
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🔍 Recherche -->
+    <div class="search-section" *ngIf="searchFormGroup">
+      <form [formGroup]="searchFormGroup" (ngSubmit)="handleSearchCustomers()">
+        <div class="search-container">
+          <div class="search-input">
+            <i class="bi bi-search"></i>
+            <input type="text" formControlName="keyword" placeholder="Search customers by name or email...">
+          </div>
+          <button type="submit" class="btn btn-primary">
+            <i class="bi bi-search"></i>
+            Search
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- 📊 Liste des clients -->
+    <ng-container *ngIf="customers | async as listCustomers; else failureOrLading">
+      <div class="customers-table" *ngIf="listCustomers.length > 0; else noCustomers">
+        <div class="table-header">
+          <div class="header-cell">Customer</div>
+          <div class="header-cell">Contact</div>
+          <div class="header-cell">Accounts</div>
+          <div class="header-cell">Actions</div>
+        </div>
+
+        <div class="table-body">
+          <div class="table-row" *ngFor="let customer of listCustomers">
+            <div class="table-cell customer-cell">
+              <div class="customer-avatar">
+                {{customer.name.charAt(0).toUpperCase()}}
+              </div>
+              <div class="customer-info">
+                <div class="customer-name">{{customer.name}}</div>
+                <div class="customer-id">ID: {{customer.id}}</div>
+              </div>
+            </div>
+            <div class="table-cell">
+              <div class="contact-info">
+                <div class="email">
+                  <i class="bi bi-envelope"></i>
+                  {{customer.email}}
+                </div>
+                <div class="phone" *ngIf="customer.phone">
+                  <i class="bi bi-telephone"></i>
+                  {{customer.phone}}
+                </div>
+              </div>
+            </div>
+            <div class="table-cell">
+              <button class="btn btn-outline" (click)="handleCustomerAccounts(customer)">
+                <i class="bi bi-credit-card"></i>
+                View Accounts
+              </button>
+            </div>
+            <div class="table-cell actions-cell">
+              <div class="action-buttons">
+                <button class="btn btn-secondary btn-sm" title="Edit Customer">
+                  <i class="bi bi-pencil"></i>
+                </button>
+                <button class="btn btn-danger btn-sm" (click)="handleDeleteCustomer(customer)" title="Delete Customer">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 🚫 État vide -->
+      <ng-template #noCustomers>
+        <div class="empty-state">
+          <div class="empty-icon">
+            <i class="bi bi-people"></i>
+          </div>
+          <h3>No Customers Found</h3>
+          <p>No customers match your search criteria or you haven't added any customers yet.</p>
+          <button class="btn btn-primary" routerLink="/new-customer">
+            <i class="bi bi-person-plus"></i>
+            Add First Customer
+          </button>
+        </div>
+      </ng-template>
+    </ng-container>
+
+    <!-- ❌ États d'erreur et de chargement -->
+    <ng-template #failureOrLading>
+      <ng-container *ngIf="errorMessage; else loading">
+        <div class="error-state">
+          <div class="error-icon">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+          </div>
+          <h3>Error Loading Customers</h3>
+          <p>{{errorMessage}}</p>
+          <button class="btn btn-primary" (click)="loadCustomers()">
+            <i class="bi bi-arrow-clockwise"></i>
+            Retry
+          </button>
+        </div>
+      </ng-container>
+
+      <ng-template #loading>
+        <div class="loading-state">
+          <div class="loading-spinner">
+            <i class="bi bi-arrow-clockwise spin"></i>
+          </div>
+          <h3>Loading Customers...</h3>
+          <p>Please wait while we fetch your customer data.</p>
+        </div>
+      </ng-template>
+    </ng-template>
+  </div>
+</div>

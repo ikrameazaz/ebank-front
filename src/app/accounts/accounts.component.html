@@ -1,0 +1,198 @@
+<div class="container mt-4">
+  <div class="row g-4">
+    <!-- Colonne de gauche - Recherche et détails du compte -->
+    <div class="col-lg-6">
+      <div class="card shadow-sm border-0 rounded-3 mb-4">
+        <div class="card-header bg-primary text-white py-3">
+          <h4 class="mb-0"><i class="bi bi-credit-card me-2"></i>Recherche de compte</h4>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="accountFormGroup" (ngSubmit)="handleSearchAccount()" class="mb-4">
+            <div class="input-group">
+              <span class="input-group-text bg-light border-0 shadow-sm">
+                <i class="bi bi-search text-primary"></i>
+              </span>
+              <input type="text" formControlName="accountId" class="form-control shadow-sm border-0"
+                     placeholder="Entrez l'identifiant du compte">
+              <button class="btn btn-primary shadow-sm" type="submit">
+                Rechercher
+              </button>
+            </div>
+          </form>
+
+          <ng-template #errorTemplate>
+            <ng-container *ngIf="errorMessage; else loading">
+              <div class="alert alert-danger d-flex align-items-center" role="alert">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                <div>{{errorMessage}}</div>
+              </div>
+            </ng-container>
+            <ng-template #loading>
+              <div class="d-flex justify-content-center py-4">
+                <div class="spinner-border text-primary" role="status">
+                  <span class="visually-hidden">Chargement...</span>
+                </div>
+              </div>
+            </ng-template>
+          </ng-template>
+
+          <ng-container *ngIf="accountObservable | async as account">
+            <div class="card bg-light border-0 shadow-sm mb-4">
+              <div class="card-body">
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <h5 class="text-muted mb-1">Identifiant du compte</h5>
+                    <h4 class="text-primary">{{account.accountId}}</h4>
+                  </div>
+                  <div class="col-md-6 text-md-end">
+                    <h5 class="text-muted mb-1">Solde actuel</h5>
+                    <h3 class="text-success">{{account.balance | number : '1.2-2'}} €</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <h4 class="mb-3 d-flex align-items-center">
+              <i class="bi bi-clock-history me-2 text-primary"></i>
+              Historique des opérations
+            </h4>
+
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead class="table-light">
+                <tr>
+                  <th>ID</th>
+                  <th>Date</th>
+                  <th>Type</th>
+                  <th class="text-end">Montant</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let op of account.accountOperationDTOS"
+                    [ngClass]="{'table-success': op.type === 'CREDIT', 'table-danger': op.type === 'DEBIT', 'table-info': op.type === 'TRANSFER'}">
+                  <td>{{op.id}}</td>
+                  <td>{{op.operationDate | date : 'dd/MM/yyyy HH:mm'}}</td>
+                  <td>
+                      <span *ngIf="op.type === 'CREDIT'" class="badge bg-success">
+                        <i class="bi bi-arrow-down-right me-1"></i>CRÉDIT
+                      </span>
+                    <span *ngIf="op.type === 'DEBIT'" class="badge bg-danger">
+                        <i class="bi bi-arrow-up-right me-1"></i>DÉBIT
+                      </span>
+                    <span *ngIf="op.type === 'TRANSFER'" class="badge bg-info">
+                        <i class="bi bi-arrow-left-right me-1"></i>VIREMENT
+                      </span>
+                  </td>
+                  <td class="text-end fw-bold">{{op.amount | number : '1.2-2'}} €</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Pagination -->
+            <nav aria-label="Pagination des opérations" class="mt-3">
+              <ul class="pagination justify-content-center">
+                <li *ngFor="let item of [].constructor(account.totalPages); let page=index"
+                    class="page-item" [ngClass]="{'active': page==currentPage}">
+                  <a class="page-link" href="javascript:void(0)" (click)="gotoPage(page)">{{page}}</a>
+                </li>
+              </ul>
+            </nav>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+    <!-- Colonne de droite - Opérations -->
+    <div class="col-lg-6">
+      <div class="card shadow-sm border-0 rounded-3" *ngIf="accountObservable">
+        <div class="card-header bg-success text-white py-3">
+          <h4 class="mb-0"><i class="bi bi-arrow-left-right me-2"></i>Effectuer une opération</h4>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="operationFromGroup" (ngSubmit)="handleAccountOperation()" method="post" class="p-2">
+            <div class="mb-4">
+              <h5 class="mb-3">Type d'opération</h5>
+              <div class="d-flex gap-3">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" formControlName="operationType"
+                         value="DEBIT" id="debitRadio">
+                  <label class="form-check-label" for="debitRadio">
+                    <span class="badge bg-danger"><i class="bi bi-arrow-up-right me-1"></i>DÉBIT</span>
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" formControlName="operationType"
+                         value="CREDIT" id="creditRadio">
+                  <label class="form-check-label" for="creditRadio">
+                    <span class="badge bg-success"><i class="bi bi-arrow-down-right me-1"></i>CRÉDIT</span>
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" formControlName="operationType"
+                         value="TRANSFER" id="transferRadio">
+                  <label class="form-check-label" for="transferRadio">
+                    <span class="badge bg-info"><i class="bi bi-arrow-left-right me-1"></i>VIREMENT</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3" *ngIf="operationFromGroup.value.operationType=='TRANSFER'">
+              <label class="form-label">Compte destinataire</label>
+              <div class="input-group">
+                <span class="input-group-text bg-light border-0">
+                  <i class="bi bi-credit-card-2-front text-primary"></i>
+                </span>
+                <input type="text" formControlName="accountDestination" class="form-control"
+                       placeholder="Identifiant du compte destinataire">
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Montant</label>
+              <div class="input-group">
+                <span class="input-group-text bg-light border-0">
+                  <i class="bi bi-cash text-success"></i>
+                </span>
+                <input type="number" formControlName="amount" class="form-control"
+                       placeholder="Montant de l'opération">
+                <span class="input-group-text bg-light border-0">€</span>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label">Description</label>
+              <div class="input-group">
+                <span class="input-group-text bg-light border-0">
+                  <i class="bi bi-chat-left-text text-primary"></i>
+                </span>
+                <input type="text" formControlName="description" class="form-control"
+                       placeholder="Description de l'opération">
+              </div>
+            </div>
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-success btn-lg">
+                <i class="bi bi-check-circle me-2"></i>Valider l'opération
+              </button>
+            </div>
+          </form>
+
+          <!-- Carte d'information -->
+          <div class="card bg-light border-0 mt-4">
+            <div class="card-body">
+              <h5 class="card-title text-primary">
+                <i class="bi bi-info-circle me-2"></i>Information
+              </h5>
+              <p class="card-text">
+                Les opérations sont traitées immédiatement. Assurez-vous de vérifier les informations
+                avant de valider votre opération.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

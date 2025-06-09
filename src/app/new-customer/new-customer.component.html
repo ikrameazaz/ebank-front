@@ -1,0 +1,156 @@
+<!-- 👤 Nouveau Customer - Design Moderne -->
+<div class="new-customer-container">
+  <div class="container">
+    <!-- 📋 Header de la page -->
+    <div class="page-header">
+      <div class="header-content">
+        <div class="header-info">
+          <div class="header-icon">
+            <i class="bi bi-person-plus-fill"></i>
+          </div>
+          <div class="header-text">
+            <h1 class="page-title">Add New Customer</h1>
+            <p class="page-subtitle">Create a new customer account in the system</p>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-outline" routerLink="/customers">
+            <i class="bi bi-arrow-left"></i>
+            Back to Customers
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 📝 Formulaire principal -->
+    <div class="form-container">
+      <div class="form-card">
+        <div class="form-header">
+          <h2 class="form-title">Customer Information</h2>
+          <p class="form-description">Please fill in all required fields to create a new customer</p>
+        </div>
+
+        <form [formGroup]="newCustomerFormGroup" (ngSubmit)="handleSaveCustomer()" class="customer-form">
+          <!-- 👤 Nom du client -->
+          <div class="form-group">
+            <label class="form-label">
+              <i class="bi bi-person"></i>
+              Full Name *
+            </label>
+            <input
+              type="text"
+              formControlName="name"
+              class="form-control"
+              placeholder="Enter customer's full name"
+              [class.error]="newCustomerFormGroup.get('name')?.touched && newCustomerFormGroup.get('name')?.errors">
+
+            <!-- Messages d'erreur -->
+            <div class="error-message"
+                 *ngIf="newCustomerFormGroup.get('name')?.touched && newCustomerFormGroup.get('name')?.errors?.['required']">
+              <i class="bi bi-exclamation-circle"></i>
+              Full name is required
+            </div>
+            <div class="error-message"
+                 *ngIf="newCustomerFormGroup.get('name')?.touched && newCustomerFormGroup.get('name')?.errors?.['minlength']">
+              <i class="bi bi-exclamation-circle"></i>
+              Name must be at least 4 characters long
+            </div>
+          </div>
+
+          <!-- 📧 Email -->
+          <div class="form-group">
+            <label class="form-label">
+              <i class="bi bi-envelope"></i>
+              Email Address *
+            </label>
+            <input
+              type="email"
+              formControlName="email"
+              class="form-control"
+              placeholder="Enter customer's email address"
+              [class.error]="newCustomerFormGroup.get('email')?.touched && newCustomerFormGroup.get('email')?.errors">
+
+            <!-- Messages d'erreur -->
+            <div class="error-message"
+                 *ngIf="newCustomerFormGroup.get('email')?.touched && newCustomerFormGroup.get('email')?.errors?.['required']">
+              <i class="bi bi-exclamation-circle"></i>
+              Email address is required
+            </div>
+            <div class="error-message"
+                 *ngIf="newCustomerFormGroup.get('email')?.touched && newCustomerFormGroup.get('email')?.errors?.['email']">
+              <i class="bi bi-exclamation-circle"></i>
+              Please enter a valid email address
+            </div>
+          </div>
+
+          <!-- 📞 Téléphone (optionnel) -->
+          <div class="form-group">
+            <label class="form-label">
+              <i class="bi bi-telephone"></i>
+              Phone Number
+            </label>
+            <input
+              type="tel"
+              formControlName="phone"
+              class="form-control"
+              placeholder="Enter customer's phone number (optional)">
+          </div>
+
+          <!-- 🏠 Adresse (optionnel) -->
+          <div class="form-group">
+            <label class="form-label">
+              <i class="bi bi-geo-alt"></i>
+              Address
+            </label>
+            <textarea
+              formControlName="address"
+              class="form-control"
+              rows="3"
+              placeholder="Enter customer's address (optional)"></textarea>
+          </div>
+
+          <!-- 🎯 Actions du formulaire -->
+          <div class="form-actions">
+            <button type="button" class="btn btn-secondary" routerLink="/customers">
+              <i class="bi bi-x-circle"></i>
+              Cancel
+            </button>
+            <button type="submit" class="btn btn-primary" [disabled]="!newCustomerFormGroup.valid || isLoading">
+              <i class="bi bi-check-circle" *ngIf="!isLoading"></i>
+              <i class="bi bi-arrow-clockwise spin" *ngIf="isLoading"></i>
+              {{isLoading ? 'Creating...' : 'Create Customer'}}
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- 💡 Informations utiles -->
+      <div class="info-card">
+        <div class="info-header">
+          <i class="bi bi-info-circle"></i>
+          <h3>Important Information</h3>
+        </div>
+        <ul class="info-list">
+          <li>All fields marked with * are required</li>
+          <li>Email address must be unique in the system</li>
+          <li>Customer will be created with default settings</li>
+          <li>You can add accounts after customer creation</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 🎉 Message de succès -->
+<div class="success-overlay" *ngIf="showSuccessMessage">
+  <div class="success-modal">
+    <div class="success-icon">
+      <i class="bi bi-check-circle-fill"></i>
+    </div>
+    <h3>Customer Created Successfully!</h3>
+    <p>The new customer has been added to the system.</p>
+    <button class="btn btn-primary" (click)="closeSuccessMessage()">
+      Continue
+    </button>
+  </div>
+</div>

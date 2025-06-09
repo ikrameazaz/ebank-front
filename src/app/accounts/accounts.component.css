@@ -1,0 +1,160 @@
+/* Styles généraux */
+.card {
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+.card-header {
+  border-bottom: none;
+}
+
+/* Styles pour les formulaires */
+.form-control, .input-group-text {
+  padding: 0.6rem 1rem;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  border-color: #86b7fe;
+}
+
+/* Styles pour les tableaux */
+.table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.table th {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+/* Styles pour les badges */
+.badge {
+  padding: 0.5rem 0.7rem;
+  font-weight: 500;
+}
+
+/* Styles pour la pagination */
+.pagination .page-link {
+  border-radius: 50%;
+  margin: 0 3px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+
+/* Animation pour les icônes */
+.bi {
+  transition: transform 0.3s ease;
+}
+
+.btn:hover .bi,
+.badge:hover .bi {
+  transform: scale(1.2);
+}
+
+/* Styles pour les montants */
+.text-success {
+  color: #198754 !important;
+}
+
+.text-danger {
+  color: #dc3545 !important;
+}
+
+/* Styles pour les alertes */
+.alert {
+  border-radius: 8px;
+  border: none;
+}
+
+/* Styles pour les boutons */
+.btn {
+  padding: 0.6rem 1.2rem;
+  font-weight: 500;
+  border: none;
+}
+
+.btn-lg {
+  padding: 0.8rem 1.5rem;
+}
+
+/* Styles pour les spinners */
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Styles pour les comptes */
+.account-container {
+  background: #fff;
+  padding: 15px;
+  margin: 10px 0;
+  border: 1px solid #eee;
+}
+
+.account-info {
+  color: #666;
+  font-size: 14px;
+}
+
+.operations-table {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.search-form {
+  margin-bottom: 20px;
+}
+
+.search-input {
+  max-width: 250px;
+  display: inline-block;
+}
+
+.balance {
+  color: #666;
+  font-weight: normal;
+}
+
+.operation-row {
+  background: #fff;
+}
+
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.page-link {
+  border: 1px solid #ddd;
+  padding: 5px 10px;
+  color: #666;
+  text-decoration: none;
+}
+
+.page-link:hover {
+  background-color: #f8f9fa;
+}

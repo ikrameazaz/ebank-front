@@ -1,0 +1,130 @@
+<!-- 📊 Dashboard Principal -->
+<div class="dashboard-container">
+  <!-- 📈 Statistiques principales -->
+  <div class="stats-grid">
+    <div class="stat-card customers">
+      <div class="stat-icon">
+        <i class="bi bi-people-fill"></i>
+      </div>
+      <div class="stat-content">
+        <div class="stat-label">Total Customers</div>
+        <div class="stat-value">{{totalCustomers || 0}}</div>
+        <div class="stat-change positive">
+          <i class="bi bi-arrow-up"></i>
+          +4% this month
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-card accounts">
+      <div class="stat-icon">
+        <i class="bi bi-credit-card-fill"></i>
+      </div>
+      <div class="stat-content">
+        <div class="stat-label">Total Accounts</div>
+        <div class="stat-value">{{totalAccounts || 0}}</div>
+        <div class="stat-change neutral">
+          <i class="bi bi-dash"></i>
+          5 active accounts
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-card balance">
+      <div class="stat-icon">
+        <i class="bi bi-currency-dollar"></i>
+      </div>
+      <div class="stat-content">
+        <div class="stat-label">Total Balance</div>
+        <div class="stat-value">${{totalBalance | number:'1.2-2' || '217,557.81'}}</div>
+        <div class="stat-change positive">
+          <i class="bi bi-arrow-up"></i>
+          +4% revenue
+        </div>
+      </div>
+    </div>
+
+    <div class="stat-card transactions">
+      <div class="stat-icon">
+        <i class="bi bi-arrow-left-right"></i>
+      </div>
+      <div class="stat-content">
+        <div class="stat-label">Transactions</div>
+        <div class="stat-value">{{totalTransactions || 60}}</div>
+        <div class="stat-change neutral">
+          <i class="bi bi-clock"></i>
+          0 pending
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 📋 Contenu principal -->
+  <div class="main-content">
+    <!-- 📊 Transactions récentes -->
+    <div class="content-section">
+      <div class="section-header">
+        <h3 class="section-title">Recent Transactions</h3>
+        <a href="#" class="view-all-link">View All</a>
+      </div>
+      
+      <div class="transactions-table">
+        <div class="table-header">
+          <div class="header-cell">Customer</div>
+          <div class="header-cell">Type</div>
+          <div class="header-cell">Amount</div>
+          <div class="header-cell">Status</div>
+          <div class="header-cell">Date</div>
+        </div>
+        
+        <div class="table-body">
+          <div class="table-row" *ngFor="let transaction of recentTransactions">
+            <div class="table-cell customer-cell">
+              <div class="customer-avatar">
+                <i class="bi bi-person-circle"></i>
+              </div>
+              <span class="customer-name">{{transaction.customerName || 'mohamed'}}</span>
+            </div>
+            <div class="table-cell">
+              <span class="transaction-type" [ngClass]="transaction.type?.toLowerCase()">
+                {{transaction.type || 'CREDIT'}}
+              </span>
+            </div>
+            <div class="table-cell">
+              <span class="amount">{{transaction.amount | currency || '$5,591.19'}}</span>
+            </div>
+            <div class="table-cell">
+              <span class="status completed">COMPLETED</span>
+            </div>
+            <div class="table-cell">
+              <span class="date">{{transaction.date | date:'M/d/yy, h:mm a' || '6/4/25, 9:05 PM'}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🎯 Actions rapides -->
+    <div class="quick-actions">
+      <h3 class="section-title">Quick Actions</h3>
+      <div class="actions-grid">
+        <button class="action-btn add-customer" (click)="navigateToNewCustomer()">
+          <i class="bi bi-person-plus"></i>
+          Add New Customer
+        </button>
+        <button class="action-btn create-account" (click)="navigateToAccounts()">
+          <i class="bi bi-plus-circle"></i>
+          Create Account
+        </button>
+        <button class="action-btn review-transactions" (click)="navigateToTransactions()">
+          <i class="bi bi-arrow-repeat"></i>
+          Review Transactions
+        </button>
+        <button class="action-btn generate-report" (click)="generateReport()">
+          <i class="bi bi-file-earmark-text"></i>
+          Generate Report
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

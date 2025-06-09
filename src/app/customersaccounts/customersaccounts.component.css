@@ -1,0 +1,134 @@
+/* Styles généraux */
+.card {
+  transition: all 0.3s ease;
+  border-radius: 10px;
+}
+
+.card:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Styles pour le tableau */
+.table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.table th {
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+  padding: 1rem;
+}
+
+.table td {
+  padding: 1rem;
+  vertical-align: middle;
+}
+
+.customer-row {
+  transition: all 0.2s ease;
+}
+
+.customer-row:hover {
+  background-color: rgba(13, 110, 253, 0.05);
+}
+
+/* Avatar circulaire pour les initiales */
+.avatar-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+/* Styles pour les boutons */
+.btn {
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-sm {
+  padding: 0.4rem 0.8rem;
+}
+
+.btn-outline-success:hover {
+  background-color: #198754;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.btn-outline-danger:hover {
+  background-color: #dc3545;
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Animation pour les icônes */
+.bi {
+  transition: transform 0.3s ease;
+}
+
+.btn:hover .bi {
+  transform: scale(1.2);
+}
+
+/* Styles pour le spinner de chargement */
+.spinner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Styles pour les alertes */
+.alert {
+  border-radius: 8px;
+  border: none;
+  padding: 1rem;
+}
+
+/* Styles pour le formulaire de recherche */
+.input-group {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.form-control:focus {
+  box-shadow: none;
+  border-color: #ced4da;
+}
+
+/* Styles pour les liens */
+a {
+  color: #0d6efd;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: #0a58ca;
+}
+
+/* Styles pour les textes */
+.fw-medium {
+  font-weight: 500;
+}
+
+.text-primary {
+  color: #0d6efd !important;
+}
+
+.text-muted {
+  color: #6c757d !important;
+}
