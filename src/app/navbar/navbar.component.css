@@ -1,134 +1,65 @@
-/* 🏦 NAVBAR MODERNE DIGITAL BANKING */
-.modern-navbar {
-  background-color: var(--white);
-  border-bottom: 1px solid var(--gray-200);
-  box-shadow: var(--shadow-sm);
-  padding: 0;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
-
-.navbar-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 var(--spacing-lg);
-  height: 64px;
-}
-
-/* 🏦 Logo et marque */
+/* Styles pour la navbar */
 .navbar-brand {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-  text-decoration: none;
-  color: var(--gray-900);
-  font-weight: 600;
-}
-
-.navbar-brand i {
   font-size: 1.5rem;
-  color: var(--primary-red);
+  letter-spacing: 0.5px;
 }
 
-.brand-text {
-  font-size: 1.125rem;
-  font-weight: 700;
-  color: var(--gray-900);
-}
-
-/* 📱 Menu de navigation */
-.navbar-menu {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-md);
-}
-
-.nav-item {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-xs);
-  padding: var(--spacing-sm) var(--spacing-md);
-  border-radius: var(--radius-md);
-  text-decoration: none;
-  color: var(--gray-600);
+.nav-link {
   font-weight: 500;
-  font-size: 0.875rem;
+  padding: 0.5rem 1rem;
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.dropdown-item {
+  padding: 0.5rem 1rem;
   transition: all 0.2s ease;
-  position: relative;
 }
 
-.nav-item:hover {
-  color: var(--gray-900);
-  background-color: var(--gray-50);
+.dropdown-item:hover {
+  background-color: rgba(13, 110, 253, 0.1);
 }
 
-.nav-item.active {
-  color: var(--white);
-  background-color: var(--primary-red);
+/* Animation pour les icônes */
+.bi {
+  transition: transform 0.3s ease;
 }
 
-.nav-item.active .nav-badge {
-  background-color: var(--primary-red);
-  color: var(--white);
-  padding: var(--spacing-xs) var(--spacing-sm);
-  border-radius: var(--radius-md);
+.nav-link:hover .bi,
+.dropdown-item:hover .bi {
+  transform: scale(1.2);
 }
 
-.nav-item i {
-  font-size: 1rem;
+/* Styles pour la bannière */
+.bg-primary.bg-opacity-10 {
+  background-color: rgba(13, 110, 253, 0.1);
 }
 
-/* 👤 Section utilisateur */
-.navbar-user {
-  display: flex;
-  align-items: center;
+.bg-success.bg-opacity-10 {
+  background-color: rgba(25, 135, 84, 0.1);
 }
 
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-xs);
-  padding: var(--spacing-sm) var(--spacing-md);
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  transition: all 0.2s ease;
-  color: var(--gray-700);
+.bg-info.bg-opacity-10 {
+  background-color: rgba(13, 202, 240, 0.1);
 }
 
-.user-info:hover {
-  background-color: var(--gray-50);
-}
-
-.user-info i:first-child {
-  font-size: 1.25rem;
-  color: var(--primary-red);
-}
-
-.user-name {
-  font-weight: 600;
-  font-size: 0.875rem;
-}
-
-.user-info i:last-child {
-  font-size: 0.75rem;
-  color: var(--gray-400);
-}
-
-/* 📊 Dashboard Header */
-.dashboard-header {
-  background-color: var(--gray-50);
+/* 📊 Dashboard Overview */
+.dashboard-overview {
+  background: linear-gradient(135deg, var(--gray-50) 0%, var(--white) 100%);
   border-bottom: 1px solid var(--gray-200);
   padding: var(--spacing-xl) 0;
 }
 
-.header-content {
+.overview-content {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--spacing-lg);
 }
 
 .welcome-section {
@@ -143,47 +74,65 @@
 }
 
 .dashboard-subtitle {
-  font-size: 1rem;
+  font-size: 1.125rem;
   color: var(--gray-600);
   margin: 0;
 }
 
-.header-actions {
+.quick-stats {
   display: flex;
-  align-items: center;
-  gap: var(--spacing-md);
+  gap: var(--spacing-xl);
+}
+
+.stat-item {
+  text-align: center;
+  padding: var(--spacing-md);
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-200);
+  min-width: 80px;
+  transition: all 0.2s ease;
+}
+
+.stat-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-red);
+  margin-bottom: var(--spacing-xs);
+}
+
+.stat-label {
+  font-size: 0.875rem;
+  color: var(--gray-600);
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
 }
 
 /* 📱 Responsive */
 @media (max-width: 768px) {
-  .navbar-container {
-    padding: 0 var(--spacing-md);
-  }
-
-  .navbar-menu {
-    display: none;
-  }
-
-  .header-content {
+  .overview-content {
     flex-direction: column;
     align-items: flex-start;
     gap: var(--spacing-md);
   }
 
-  .header-actions {
+  .quick-stats {
     width: 100%;
-    justify-content: flex-start;
+    justify-content: space-around;
+    gap: var(--spacing-md);
+  }
+
+  .stat-item {
+    min-width: 70px;
   }
 
   .dashboard-title {
     font-size: 1.5rem;
   }
-}
-.card {
-  transition: all 0.3s ease;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }

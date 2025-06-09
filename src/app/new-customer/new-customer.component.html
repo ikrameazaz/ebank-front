@@ -1,156 +1,99 @@
-<!-- 👤 Nouveau Customer - Design Moderne -->
-<div class="new-customer-container">
-  <div class="container">
-    <!-- 📋 Header de la page -->
-    <div class="page-header">
-      <div class="header-content">
-        <div class="header-info">
-          <div class="header-icon">
-            <i class="bi bi-person-plus-fill"></i>
-          </div>
-          <div class="header-text">
-            <h1 class="page-title">Add New Customer</h1>
-            <p class="page-subtitle">Create a new customer account in the system</p>
-          </div>
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <!-- En-tête de la page -->
+      <div class="d-flex align-items-center mb-4">
+        <div class="icon-circle bg-primary bg-opacity-10 text-primary me-3">
+          <i class="bi bi-person-plus-fill"></i>
         </div>
-        <div class="header-actions">
-          <button class="btn btn-outline" routerLink="/customers">
-            <i class="bi bi-arrow-left"></i>
-            Back to Customers
-          </button>
+        <div>
+          <h2 class="text-primary fw-bold mb-0">Nouveau client</h2>
+          <p class="text-muted mb-0">Ajoutez un nouveau client à votre base de données</p>
+        </div>
+      </div>
+
+      <!-- Carte principale -->
+      <div class="card border-0 shadow-sm rounded-3">
+        <div class="card-body p-4">
+          <!-- Formulaire -->
+          <form [formGroup]="newCustomerFormGroup" (ngSubmit)="handleSaveCustomer()">
+            <!-- Champ Nom -->
+            <div class="mb-4">
+              <label class="form-label fw-medium">Nom</label>
+              <div class="input-group">
+                <span class="input-group-text bg-light border-0">
+                  <i class="bi bi-person text-primary"></i>
+                </span>
+                <input type="text" formControlName="name" class="form-control border-0 bg-light"
+                       placeholder="Entrez le nom du client">
+              </div>
+              <!-- Message d'erreur -->
+              <div class="form-text text-danger mt-2"
+                   *ngIf="newCustomerFormGroup.get('name')?.touched &&
+                   newCustomerFormGroup.get('name')?.errors?.['required']">
+                <i class="bi bi-exclamation-circle me-1"></i>
+                Le nom est obligatoire
+              </div>
+              <div class="form-text text-danger mt-2"
+                   *ngIf="newCustomerFormGroup.get('name')?.touched &&
+                   newCustomerFormGroup.get('name')?.errors?.['minlength']">
+                <i class="bi bi-exclamation-circle me-1"></i>
+                Le nom doit contenir au moins 4 caractères
+              </div>
+            </div>
+
+            <!-- Champ Email -->
+            <div class="mb-4">
+              <label class="form-label fw-medium">Email</label>
+              <div class="input-group">
+                <span class="input-group-text bg-light border-0">
+                  <i class="bi bi-envelope text-primary"></i>
+                </span>
+                <input type="email" formControlName="email" class="form-control border-0 bg-light"
+                       placeholder="Entrez l'adresse email du client">
+              </div>
+              <!-- Message d'erreur -->
+              <div class="form-text text-danger mt-2"
+                   *ngIf="newCustomerFormGroup.get('email')?.touched &&
+                   newCustomerFormGroup.get('email')?.errors?.['required']">
+                <i class="bi bi-exclamation-circle me-1"></i>
+                L'email est obligatoire
+              </div>
+              <div class="form-text text-danger mt-2"
+                   *ngIf="newCustomerFormGroup.get('email')?.touched &&
+                   newCustomerFormGroup.get('email')?.errors?.['email']">
+                <i class="bi bi-exclamation-circle me-1"></i>
+                L'adresse email n'est pas valide
+              </div>
+            </div>
+
+            <!-- Boutons d'action -->
+            <div class="d-flex gap-3 mt-4">
+              <button type="button" class="btn btn-outline-secondary flex-grow-1" routerLink="/customers">
+                <i class="bi bi-arrow-left me-2"></i>Annuler
+              </button>
+              <button type="submit" class="btn btn-primary flex-grow-1" [disabled]="!newCustomerFormGroup.valid">
+                <i class="bi bi-check-circle me-2"></i>Enregistrer
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Carte d'information -->
+      <div class="card border-0 shadow-sm rounded-3 bg-light mt-4">
+        <div class="card-body p-3">
+          <div class="d-flex">
+            <div class="icon-circle bg-info bg-opacity-10 text-info me-3">
+              <i class="bi bi-info-circle"></i>
+            </div>
+            <div>
+              <h5 class="text-info mb-1">Information</h5>
+              <p class="mb-0 small">Tous les champs marqués sont obligatoires. Après l'enregistrement, vous serez redirigé vers la liste des clients.</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-
-    <!-- 📝 Formulaire principal -->
-    <div class="form-container">
-      <div class="form-card">
-        <div class="form-header">
-          <h2 class="form-title">Customer Information</h2>
-          <p class="form-description">Please fill in all required fields to create a new customer</p>
-        </div>
-
-        <form [formGroup]="newCustomerFormGroup" (ngSubmit)="handleSaveCustomer()" class="customer-form">
-          <!-- 👤 Nom du client -->
-          <div class="form-group">
-            <label class="form-label">
-              <i class="bi bi-person"></i>
-              Full Name *
-            </label>
-            <input
-              type="text"
-              formControlName="name"
-              class="form-control"
-              placeholder="Enter customer's full name"
-              [class.error]="newCustomerFormGroup.get('name')?.touched && newCustomerFormGroup.get('name')?.errors">
-
-            <!-- Messages d'erreur -->
-            <div class="error-message"
-                 *ngIf="newCustomerFormGroup.get('name')?.touched && newCustomerFormGroup.get('name')?.errors?.['required']">
-              <i class="bi bi-exclamation-circle"></i>
-              Full name is required
-            </div>
-            <div class="error-message"
-                 *ngIf="newCustomerFormGroup.get('name')?.touched && newCustomerFormGroup.get('name')?.errors?.['minlength']">
-              <i class="bi bi-exclamation-circle"></i>
-              Name must be at least 4 characters long
-            </div>
-          </div>
-
-          <!-- 📧 Email -->
-          <div class="form-group">
-            <label class="form-label">
-              <i class="bi bi-envelope"></i>
-              Email Address *
-            </label>
-            <input
-              type="email"
-              formControlName="email"
-              class="form-control"
-              placeholder="Enter customer's email address"
-              [class.error]="newCustomerFormGroup.get('email')?.touched && newCustomerFormGroup.get('email')?.errors">
-
-            <!-- Messages d'erreur -->
-            <div class="error-message"
-                 *ngIf="newCustomerFormGroup.get('email')?.touched && newCustomerFormGroup.get('email')?.errors?.['required']">
-              <i class="bi bi-exclamation-circle"></i>
-              Email address is required
-            </div>
-            <div class="error-message"
-                 *ngIf="newCustomerFormGroup.get('email')?.touched && newCustomerFormGroup.get('email')?.errors?.['email']">
-              <i class="bi bi-exclamation-circle"></i>
-              Please enter a valid email address
-            </div>
-          </div>
-
-          <!-- 📞 Téléphone (optionnel) -->
-          <div class="form-group">
-            <label class="form-label">
-              <i class="bi bi-telephone"></i>
-              Phone Number
-            </label>
-            <input
-              type="tel"
-              formControlName="phone"
-              class="form-control"
-              placeholder="Enter customer's phone number (optional)">
-          </div>
-
-          <!-- 🏠 Adresse (optionnel) -->
-          <div class="form-group">
-            <label class="form-label">
-              <i class="bi bi-geo-alt"></i>
-              Address
-            </label>
-            <textarea
-              formControlName="address"
-              class="form-control"
-              rows="3"
-              placeholder="Enter customer's address (optional)"></textarea>
-          </div>
-
-          <!-- 🎯 Actions du formulaire -->
-          <div class="form-actions">
-            <button type="button" class="btn btn-secondary" routerLink="/customers">
-              <i class="bi bi-x-circle"></i>
-              Cancel
-            </button>
-            <button type="submit" class="btn btn-primary" [disabled]="!newCustomerFormGroup.valid || isLoading">
-              <i class="bi bi-check-circle" *ngIf="!isLoading"></i>
-              <i class="bi bi-arrow-clockwise spin" *ngIf="isLoading"></i>
-              {{isLoading ? 'Creating...' : 'Create Customer'}}
-            </button>
-          </div>
-        </form>
-      </div>
-
-      <!-- 💡 Informations utiles -->
-      <div class="info-card">
-        <div class="info-header">
-          <i class="bi bi-info-circle"></i>
-          <h3>Important Information</h3>
-        </div>
-        <ul class="info-list">
-          <li>All fields marked with * are required</li>
-          <li>Email address must be unique in the system</li>
-          <li>Customer will be created with default settings</li>
-          <li>You can add accounts after customer creation</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- 🎉 Message de succès -->
-<div class="success-overlay" *ngIf="showSuccessMessage">
-  <div class="success-modal">
-    <div class="success-icon">
-      <i class="bi bi-check-circle-fill"></i>
-    </div>
-    <h3>Customer Created Successfully!</h3>
-    <p>The new customer has been added to the system.</p>
-    <button class="btn btn-primary" (click)="closeSuccessMessage()">
-      Continue
-    </button>
   </div>
 </div>

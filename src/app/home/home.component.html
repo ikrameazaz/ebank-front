@@ -1,0 +1,188 @@
+<!-- 🏠 HOME PAGE - BANKING DASHBOARD -->
+<div class="home-container">
+  <div class="container">
+    
+    <!-- 📊 Main Dashboard Grid -->
+    <div class="dashboard-grid">
+      
+      <!-- 📈 Quick Overview Cards -->
+      <div class="overview-section">
+        <h2 class="section-title">Overview</h2>
+        <div class="overview-cards">
+          <div class="overview-card customers">
+            <div class="card-icon">
+              <i class="bi bi-people-fill"></i>
+            </div>
+            <div class="card-content">
+              <div class="card-value">{{totalCustomers || 156}}</div>
+              <div class="card-label">Total Customers</div>
+              <div class="card-change positive">
+                <i class="bi bi-arrow-up"></i>
+                +12% this month
+              </div>
+            </div>
+          </div>
+          
+          <div class="overview-card accounts">
+            <div class="card-icon">
+              <i class="bi bi-credit-card-fill"></i>
+            </div>
+            <div class="card-content">
+              <div class="card-value">{{totalAccounts || 89}}</div>
+              <div class="card-label">Active Accounts</div>
+              <div class="card-change neutral">
+                <i class="bi bi-dash"></i>
+                No change
+              </div>
+            </div>
+          </div>
+          
+          <div class="overview-card transactions">
+            <div class="card-icon">
+              <i class="bi bi-arrow-left-right"></i>
+            </div>
+            <div class="card-content">
+              <div class="card-value">{{todayTransactions || 247}}</div>
+              <div class="card-label">Today's Transactions</div>
+              <div class="card-change positive">
+                <i class="bi bi-arrow-up"></i>
+                +8% from yesterday
+              </div>
+            </div>
+          </div>
+          
+          <div class="overview-card balance">
+            <div class="card-icon">
+              <i class="bi bi-currency-dollar"></i>
+            </div>
+            <div class="card-content">
+              <div class="card-value">{{totalBalance || '$2.4M'}}</div>
+              <div class="card-label">Total Assets</div>
+              <div class="card-change positive">
+                <i class="bi bi-arrow-up"></i>
+                +5.2% this quarter
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 🎯 Quick Actions -->
+      <div class="actions-section">
+        <h2 class="section-title">Quick Actions</h2>
+        <div class="action-cards">
+          <div class="action-card" routerLink="/new-customer">
+            <div class="action-icon">
+              <i class="bi bi-person-plus-fill"></i>
+            </div>
+            <div class="action-content">
+              <h3>Add Customer</h3>
+              <p>Register a new customer in the system</p>
+            </div>
+            <div class="action-arrow">
+              <i class="bi bi-arrow-right"></i>
+            </div>
+          </div>
+          
+          <div class="action-card" routerLink="/customers">
+            <div class="action-icon">
+              <i class="bi bi-people"></i>
+            </div>
+            <div class="action-content">
+              <h3>Manage Customers</h3>
+              <p>View and manage existing customers</p>
+            </div>
+            <div class="action-arrow">
+              <i class="bi bi-arrow-right"></i>
+            </div>
+          </div>
+          
+          <div class="action-card" routerLink="/accounts">
+            <div class="action-icon">
+              <i class="bi bi-credit-card"></i>
+            </div>
+            <div class="action-content">
+              <h3>Account Management</h3>
+              <p>Monitor and manage bank accounts</p>
+            </div>
+            <div class="action-arrow">
+              <i class="bi bi-arrow-right"></i>
+            </div>
+          </div>
+          
+          <div class="action-card" (click)="generateReport()">
+            <div class="action-icon">
+              <i class="bi bi-file-earmark-text"></i>
+            </div>
+            <div class="action-content">
+              <h3>Generate Reports</h3>
+              <p>Create financial and operational reports</p>
+            </div>
+            <div class="action-arrow">
+              <i class="bi bi-arrow-right"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 📋 Recent Activity -->
+      <div class="activity-section">
+        <div class="section-header">
+          <h2 class="section-title">Recent Activity</h2>
+          <a href="#" class="view-all">View All</a>
+        </div>
+        
+        <div class="activity-list">
+          <div class="activity-item" *ngFor="let activity of recentActivities">
+            <div class="activity-icon" [ngClass]="activity.type">
+              <i class="bi" [ngClass]="getActivityIcon(activity.type)"></i>
+            </div>
+            <div class="activity-content">
+              <div class="activity-title">{{activity.title}}</div>
+              <div class="activity-description">{{activity.description}}</div>
+            </div>
+            <div class="activity-time">{{activity.time}}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 📊 System Status -->
+      <div class="status-section">
+        <h2 class="section-title">System Status</h2>
+        <div class="status-items">
+          <div class="status-item">
+            <div class="status-indicator online"></div>
+            <div class="status-content">
+              <div class="status-label">Core Banking System</div>
+              <div class="status-value">Online</div>
+            </div>
+          </div>
+          
+          <div class="status-item">
+            <div class="status-indicator online"></div>
+            <div class="status-content">
+              <div class="status-label">Payment Gateway</div>
+              <div class="status-value">Operational</div>
+            </div>
+          </div>
+          
+          <div class="status-item">
+            <div class="status-indicator warning"></div>
+            <div class="status-content">
+              <div class="status-label">Backup System</div>
+              <div class="status-value">Maintenance</div>
+            </div>
+          </div>
+          
+          <div class="status-item">
+            <div class="status-indicator online"></div>
+            <div class="status-content">
+              <div class="status-label">Security Monitor</div>
+              <div class="status-value">Active</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

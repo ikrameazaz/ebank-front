@@ -17,151 +17,48 @@ import {CommonModule} from '@angular/common';
   standalone: true
 })
 export class NewCustomerComponent implements OnInit {
-  // 🎯 États du composant
   successMessage: string = '';
   isLoading: boolean = false;
   newCustomerFormGroup!: FormGroup;
   isSubmitting: boolean = false;
-  showSuccessMessage: boolean = false;
 
-  constructor(
-    private fb: FormBuilder,
-    private customerService: CustomerService,
-    private router: Router
-  ) { }
+  constructor(private fb: FormBuilder,
+              private customerService: CustomerService,
+              private router: Router) { }
 
   ngOnInit(): void {
-    this.initializeForm();
-  }
-
-  /**
-   * 📝 Initialise le formulaire avec tous les champs
-   */
-  private initializeForm(): void {
     this.newCustomerFormGroup = this.fb.group({
-      name: this.fb.control('', [
-        Validators.required,
-        Validators.minLength(4),
-        Validators.maxLength(50)
-      ]),
-      email: this.fb.control('', [
-        Validators.required,
-        Validators.email
-      ]),
-      phone: this.fb.control('', [
-        Validators.pattern(/^[\+]?[0-9\s\-\(\)]{10,15}$/)
-      ]),
-      address: this.fb.control('', [
-        Validators.maxLength(200)
-      ])
+      name: this.fb.control(null, [Validators.required, Validators.minLength(4)]),
+      email: this.fb.control(null, [Validators.required, Validators.email])
     });
   }
 
-  /**
-   * 💾 Sauvegarde le nouveau client
-   */
-  handleSaveCustomer(): void {
-    if (this.newCustomerFormGroup.invalid) {
-      this.markFormGroupTouched();
-      return;
-    }
+  handleSaveCustomer() {
+    if (this.newCustomerFormGroup.invalid) return;
 
-    this.isLoading = true;
     this.isSubmitting = true;
+    let customer: Customer = this.newCustomerFormGroup.value;
 
-    const customerData: Customer = {
-      ...this.newCustomerFormGroup.value,
-      // Nettoyer les champs optionnels vides
-      phone: this.newCustomerFormGroup.value.phone?.trim() || null,
-      address: this.newCustomerFormGroup.value.address?.trim() || null
-    };
-
-    this.customerService.saveCustomer(customerData).subscribe({
-      next: (response) => {
-        this.isLoading = false;
+    this.customerService.saveCustomer(customer).subscribe({
+      next: data => {
         this.isSubmitting = false;
-        this.showSuccessMessage = true;
-
-        // Auto-fermer le message de succès après 3 secondes
-        setTimeout(() => {
-          this.closeSuccessMessage();
-        }, 3000);
+        // Afficher une notification de succès
+        this.showSuccessNotification();
+        // Rediriger vers la liste des clients
+        this.router.navigateByUrl("/customers");
       },
-      error: (error) => {
-        this.isLoading = false;
+      error: err => {
         this.isSubmitting = false;
-        console.error('Erreur lors de la création du client:', error);
-        this.handleError(error);
+        console.log(err);
+        // Gérer l'erreur ici
       }
     });
   }
 
-  /**
-   * ✅ Ferme le message de succès et redirige
-   */
-  closeSuccessMessage(): void {
-    this.showSuccessMessage = false;
-    this.router.navigateByUrl("/customers");
-  }
-
-  /**
-   * 🔍 Marque tous les champs comme touchés pour afficher les erreurs
-   */
-  private markFormGroupTouched(): void {
-    Object.keys(this.newCustomerFormGroup.controls).forEach(key => {
-      const control = this.newCustomerFormGroup.get(key);
-      control?.markAsTouched();
-    });
-  }
-
-  /**
-   * ❌ Gère les erreurs de l'API
-   */
-  private handleError(error: any): void {
-    let errorMessage = 'Une erreur est survenue lors de la création du client.';
-
-    if (error.status === 400) {
-      errorMessage = 'Données invalides. Veuillez vérifier les informations saisies.';
-    } else if (error.status === 409) {
-      errorMessage = 'Un client avec cette adresse email existe déjà.';
-    } else if (error.status === 500) {
-      errorMessage = 'Erreur serveur. Veuillez réessayer plus tard.';
-    }
-
-    alert(errorMessage);
-  }
-
-  /**
-   * 🧹 Réinitialise le formulaire
-   */
-  resetForm(): void {
-    this.newCustomerFormGroup.reset();
-    this.markFormGroupTouched();
-  }
-
-  /**
-   * 📊 Vérifie si un champ a une erreur spécifique
-   */
-  hasFieldError(fieldName: string, errorType: string): boolean {
-    const field = this.newCustomerFormGroup.get(fieldName);
-    return !!(field?.touched && field?.errors?.[errorType]);
-  }
-
-  /**
-   * 📝 Obtient le message d'erreur pour un champ
-   */
-  getFieldErrorMessage(fieldName: string): string {
-    const field = this.newCustomerFormGroup.get(fieldName);
-    if (!field?.touched || !field?.errors) return '';
-
-    const errors = field.errors;
-
-    if (errors['required']) return `${fieldName} is required`;
-    if (errors['minlength']) return `${fieldName} must be at least ${errors['minlength'].requiredLength} characters`;
-    if (errors['maxlength']) return `${fieldName} cannot exceed ${errors['maxlength'].requiredLength} characters`;
-    if (errors['email']) return 'Please enter a valid email address';
-    if (errors['pattern']) return 'Please enter a valid phone number';
-
-    return 'Invalid input';
+  // Méthode pour afficher une notification de succès (à implémenter avec une librairie comme ngx-toastr)
+  private showSuccessNotification() {
+    // Cette méthode est un placeholder pour l'ajout futur d'une notification
+    // Vous pourriez utiliser une librairie comme ngx-toastr pour l'implémenter
+    alert("Le client a été enregistré avec succès !");
   }
 }

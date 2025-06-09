@@ -1,185 +1,101 @@
-/* 👤 NEW CUSTOMER - DESIGN MODERNE */
-.new-customer-container {
-  background-color: var(--gray-50);
-  min-height: 100vh;
-  padding: var(--spacing-xl) 0;
+/* Styles généraux */
+.card {
+  transition: all 0.3s ease;
+  border-radius: 10px;
 }
 
-/* 📋 Header de la page */
-.page-header {
-  margin-bottom: var(--spacing-2xl);
+.card:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
 }
 
-.header-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: var(--spacing-lg);
-}
-
-.header-info {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-lg);
-}
-
-.header-icon {
-  width: 64px;
-  height: 64px;
-  background: linear-gradient(135deg, var(--primary-red) 0%, var(--primary-red-dark) 100%);
-  border-radius: var(--radius-xl);
+/* Icône circulaire */
+.icon-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--white);
-  font-size: 1.75rem;
-  box-shadow: var(--shadow-lg);
-}
-
-.header-text {
-  flex: 1;
-}
-
-.page-title {
-  font-size: 2.25rem;
-  font-weight: 700;
-  color: var(--gray-900);
-  margin: 0 0 var(--spacing-xs) 0;
-  line-height: 1.2;
-}
-
-.page-subtitle {
-  font-size: 1.125rem;
-  color: var(--gray-600);
-  margin: 0;
-}
-
-.header-actions {
-  display: flex;
-  gap: var(--spacing-md);
-}
-
-/* 📝 Container du formulaire */
-.form-container {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: var(--spacing-2xl);
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-/* 🃏 Carte du formulaire */
-.form-card {
-  background: var(--white);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-lg);
-  padding: var(--spacing-2xl);
-  border: 1px solid var(--gray-200);
-}
-
-.form-header {
-  margin-bottom: var(--spacing-2xl);
-  padding-bottom: var(--spacing-lg);
-  border-bottom: 1px solid var(--gray-200);
-}
-
-.form-title {
   font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--gray-900);
-  margin: 0 0 var(--spacing-xs) 0;
 }
 
-.form-description {
-  color: var(--gray-600);
-  margin: 0;
-}
-
-/* 📝 Formulaire */
-.customer-form {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-xl);
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-sm);
-}
-
-.form-label {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-xs);
-  font-weight: 600;
-  color: var(--gray-700);
-  font-size: 0.875rem;
-  text-transform: uppercase;
-  letter-spacing: 0.025em;
-}
-
-.form-label i {
-  color: var(--primary-red);
-  font-size: 1rem;
-}
-
+/* Styles pour les champs de formulaire */
 .form-control {
-  padding: var(--spacing-md) var(--spacing-lg);
-  border: 2px solid var(--gray-300);
-  border-radius: var(--radius-lg);
+  padding: 0.75rem 1rem;
   font-size: 1rem;
-  transition: all 0.2s ease;
-  background: var(--white);
-  color: var(--gray-900);
 }
 
 .form-control:focus {
-  outline: none;
-  border-color: var(--primary-red);
-  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+  box-shadow: none;
+  background-color: white !important;
 }
 
-.form-control::placeholder {
-  color: var(--gray-400);
+.input-group {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
-.form-control.error {
-  border-color: var(--primary-red);
-  background-color: rgba(231, 76, 60, 0.05);
+.input-group-text {
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
-/* ❌ Messages d'erreur */
-.error-message {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-xs);
-  color: var(--primary-red);
-  font-size: 0.875rem;
+/* Styles pour les labels */
+.form-label {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  color: #495057;
+}
+
+/* Styles pour les boutons */
+.btn {
+  padding: 0.75rem 1.5rem;
   font-weight: 500;
-  margin-top: var(--spacing-xs);
+  border-radius: 8px;
+  transition: all 0.3s ease;
 }
 
-.error-message i {
-  font-size: 1rem;
+.btn-primary {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
 }
 
-/* 🎯 Actions du formulaire */
-.form-actions {
-  display: flex;
-  gap: var(--spacing-md);
-  margin-top: var(--spacing-lg);
-  padding-top: var(--spacing-lg);
-  border-top: 1px solid var(--gray-200);
+.btn-primary:hover {
+  background-color: #0b5ed7;
+  border-color: #0a58ca;
+  transform: translateY(-2px);
 }
 
-.form-actions .btn {
-  flex: 1;
-  padding: var(--spacing-md) var(--spacing-xl);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.025em;
+.btn-outline-secondary {
+  color: #6c757d;
+  border-color: #6c757d;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #6c757d;
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Animation pour les icônes */
+.bi {
+  transition: transform 0.3s ease;
+}
+
+.btn:hover .bi {
+  transform: scale(1.2);
+}
+
+/* Styles pour les messages d'erreur */
+.form-text.text-danger {
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+/* Styles pour les textes */
+.fw-medium {
+  font-weight: 500;
 }
 
 .text-primary {
@@ -201,42 +117,6 @@
 
 .bg-info.bg-opacity-10 {
   background-color: rgba(13, 202, 240, 0.1) !important;
-}
-
-/* Styles pour le formulaire de nouveau client */
-.form-container {
-  background: #fff;
-  padding: 20px;
-  border: 1px solid #eee;
-}
-
-.form-group {
-  margin-bottom: 15px;
-}
-
-label {
-  color: #666;
-  font-weight: normal;
-  font-size: 14px;
-}
-
-input {
-  border-color: #eee;
-  background-color: #fafafa;
-}
-
-.submit-button {
-  background: #6c757d;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  margin-top: 10px;
-}
-
-.error-message {
-  color: #999;
-  font-size: 13px;
-  margin-top: 4px;
 }
 
 /* Responsive adjustments */
